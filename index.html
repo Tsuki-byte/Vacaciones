@@ -15,7 +15,21 @@
         </header>
 
         <main>
-            <section id="itinerary-section">
+            <section id="login-section" class="card">
+                <h2>Acceso Familiar</h2>
+                <p>Introduce las credenciales de la familia para ver el itinerario.</p>
+                <div class="input-group">
+                    <label for="login-email">Correo (Ej: familia@vacaciones.com)</label>
+                    <input type="text" id="login-email" required>
+                </div>
+                <div class="input-group">
+                    <label for="login-password">Contraseña</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button id="btn-login" class="primary-btn">Entrar al Itinerario</button>
+            </section>
+
+            <section id="itinerary-section" class="hidden">
                 <div class="itinerary-header">
                     <h2>Itinerario</h2>
                     <button id="btn-add-activity" class="primary-btn">+ Añadir Actividad</button>

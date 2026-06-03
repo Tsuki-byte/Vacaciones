@@ -12,7 +12,11 @@ const SUPABASE_URL = 'PON_AQUI_TU_URL';
 const SUPABASE_KEY = 'PON_AQUI_TU_KEY';
 
 // Elementos del DOM
+const loginSection = document.getElementById('login-section');
 const itinerarySection = document.getElementById('itinerary-section');
+const btnLogin = document.getElementById('btn-login');
+const inputEmail = document.getElementById('login-email');
+const inputPassword = document.getElementById('login-password');
 const daysContainer = document.getElementById('days-container');
 
 // Modal
@@ -37,18 +41,57 @@ document.addEventListener('DOMContentLoaded', () => {
 async function initSupabase(url, key) {
     try {
         if(url === 'PON_AQUI_TU_URL') {
-            alert('Aviso: Tienes que poner tu URL y Key reales en el archivo app.js');
+            alert('Aviso: Tienes que poner tu URL y Key reales en el archivo app.js antes de continuar.');
             return;
         }
         supabase = createClient(url, key);
         
-        // Comprobar la conexión intentando leer la tabla
-        await loadActivities();
+        // Comprobar si ya hay una sesión activa guardada
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+            showItinerary();
+        }
         
     } catch (error) {
-        alert('Error al conectar con Supabase. Comprueba las claves en app.js.');
+        alert('Error al inicializar Supabase. Consulta la consola.');
         console.error(error);
     }
+}
+
+// --- AUTENTICACIÓN ---
+btnLogin.addEventListener('click', async () => {
+    const email = inputEmail.value.trim();
+    const password = inputPassword.value.trim();
+    
+    if (!email || !password) {
+        alert('Por favor, rellena ambos campos.');
+        return;
+    }
+    
+    btnLogin.textContent = 'Verificando...';
+    btnLogin.disabled = true;
+    
+    try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password,
+        });
+        
+        if (error) throw error;
+        
+        showItinerary();
+    } catch (error) {
+        alert('Credenciales incorrectas o error de red.');
+        console.error(error);
+        btnLogin.textContent = 'Entrar al Itinerario';
+        btnLogin.disabled = false;
+    }
+});
+
+async function showItinerary() {
+    loginSection.classList.add('hidden');
+    itinerarySection.classList.remove('hidden');
+    await loadActivities();
 }
 
 // --- LÓGICA DE ACTIVIDADES ---
