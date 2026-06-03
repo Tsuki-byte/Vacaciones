@@ -7,9 +7,8 @@ const TOTAL_DAYS = 20;
 
 // Elementos del DOM
 // --- CREDENCIALES DE SUPABASE ---
-// TODO: ¡Pon aquí tu URL y tu Key real!
-const SUPABASE_URL = 'PON_AQUI_TU_URL';
-const SUPABASE_KEY = 'PON_AQUI_TU_KEY';
+const SUPABASE_URL = 'https://errspjsarhkqexanostz.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVycnNwanNhcmhrcWV4YW5vc3R6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNjEzNDgsImV4cCI6MjA5MDYzNzM0OH0.Cs-VzZVnYz614Ogg9DHy-3mEkCXRzq9uMxninyCFv9w';
 
 // Elementos del DOM
 const loginSection = document.getElementById('login-section');
