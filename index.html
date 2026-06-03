@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizador de Vacaciones</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>✈️ Mi Gran Viaje</h1>
+            <p>Organizador de Vacaciones - 20 Días</p>
+        </header>
+
+        <main>
+            <section id="auth-section" class="card">
+                <h2>Configuración de Supabase</h2>
+                <p>Introduce las credenciales de tu proyecto Supabase para comenzar.</p>
+                <div class="input-group">
+                    <label for="sb-url">URL del Proyecto</label>
+                    <input type="text" id="sb-url" placeholder="https://xyzcompany.supabase.co">
+                </div>
+                <div class="input-group">
+                    <label for="sb-key">Clave Pública (Anon Key)</label>
+                    <input type="password" id="sb-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+                </div>
+                <button id="btn-connect" class="primary-btn">Conectar</button>
+            </section>
+
+            <section id="itinerary-section" class="hidden">
+                <div class="itinerary-header">
+                    <h2>Itinerario</h2>
+                    <button id="btn-add-activity" class="primary-btn">+ Añadir Actividad</button>
+                </div>
+                
+                <div id="days-container" class="days-grid">
+                    <!-- Los días se generarán dinámicamente aquí -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Modal para Añadir/Editar Actividad -->
+        <div id="activity-modal" class="modal hidden">
+            <div class="modal-content card">
+                <h3 id="modal-title">Añadir Actividad</h3>
+                <form id="activity-form">
+                    <input type="hidden" id="activity-id">
+                    <div class="input-group">
+                        <label for="activity-day">Día del Viaje (1-20)</label>
+                        <input type="number" id="activity-day" min="1" max="20" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="activity-title">Título</label>
+                        <input type="text" id="activity-title" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="activity-time">Hora</label>
+                        <input type="time" id="activity-time">
+                    </div>
+                    <div class="input-group">
+                        <label for="activity-notes">Notas / Documentación</label>
+                        <textarea id="activity-notes" rows="4" placeholder="Detalles, reservas, enlaces..."></textarea>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" id="btn-cancel-modal" class="secondary-btn">Cancelar</button>
+                        <button type="submit" class="primary-btn">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Usamos un módulo para importar Supabase desde un CDN (esm.sh) -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
