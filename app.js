@@ -6,11 +6,13 @@ let activities = [];
 const TOTAL_DAYS = 20;
 
 // Elementos del DOM
-const authSection = document.getElementById('auth-section');
+// --- CREDENCIALES DE SUPABASE ---
+// TODO: ¡Pon aquí tu URL y tu Key real!
+const SUPABASE_URL = 'PON_AQUI_TU_URL';
+const SUPABASE_KEY = 'PON_AQUI_TU_KEY';
+
+// Elementos del DOM
 const itinerarySection = document.getElementById('itinerary-section');
-const btnConnect = document.getElementById('btn-connect');
-const sbUrlInput = document.getElementById('sb-url');
-const sbKeyInput = document.getElementById('sb-key');
 const daysContainer = document.getElementById('days-container');
 
 // Modal
@@ -29,53 +31,23 @@ const inputNotes = document.getElementById('activity-notes');
 
 // --- INICIALIZACIÓN ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Intentar recuperar credenciales guardadas
-    const savedUrl = localStorage.getItem('sb-url');
-    const savedKey = localStorage.getItem('sb-key');
-    
-    if (savedUrl && savedKey) {
-        sbUrlInput.value = savedUrl;
-        sbKeyInput.value = savedKey;
-        initSupabase(savedUrl, savedKey);
-    }
-});
-
-// --- SUPABASE CONEXIÓN ---
-btnConnect.addEventListener('click', () => {
-    const url = sbUrlInput.value.trim();
-    const key = sbKeyInput.value.trim();
-    
-    if (!url || !key) {
-        alert('Por favor introduce la URL y la Clave de Supabase.');
-        return;
-    }
-    
-    localStorage.setItem('sb-url', url);
-    localStorage.setItem('sb-key', key);
-    initSupabase(url, key);
+    initSupabase(SUPABASE_URL, SUPABASE_KEY);
 });
 
 async function initSupabase(url, key) {
     try {
-        btnConnect.textContent = 'Conectando...';
-        btnConnect.disabled = true;
-        
+        if(url === 'PON_AQUI_TU_URL') {
+            alert('Aviso: Tienes que poner tu URL y Key reales en el archivo app.js');
+            return;
+        }
         supabase = createClient(url, key);
         
         // Comprobar la conexión intentando leer la tabla
         await loadActivities();
         
-        // Si tiene éxito, cambiar a la vista de itinerario
-        authSection.classList.add('hidden');
-        itinerarySection.classList.remove('hidden');
-        
     } catch (error) {
-        alert('Error al conectar con Supabase. Revisa las credenciales e intenta de nuevo.');
+        alert('Error al conectar con Supabase. Comprueba las claves en app.js.');
         console.error(error);
-        localStorage.removeItem('sb-url');
-        localStorage.removeItem('sb-key');
-        btnConnect.textContent = 'Conectar';
-        btnConnect.disabled = false;
     }
 }
 
